@@ -1,0 +1,89 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(OpacityExample());
+}
+
+class OpacityExample extends StatelessWidget {
+  const OpacityExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.cyan,
+          title: Text('Opacity Exapmle'),
+          centerTitle: true,
+        ),
+        body: Mywidget(),
+      ),
+    );
+  }
+}
+
+class Mywidget extends StatefulWidget {
+  const Mywidget({super.key});
+
+  @override
+  State<Mywidget> createState() => _MywidgetState();
+}
+
+class _MywidgetState extends State<Mywidget> {
+  double _opacity1 = 1.0, _opacity2 = 1.0, _opacity3 = 1.0;
+  Widget _coloredSquare(Color color) {
+    return Container(
+      height: 100.0,
+      width: 100.0,
+      color: color,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const Text(
+            "Click on Colored squares below to make them invisible , click"
+            'once again to make them reappear .',
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() => this._opacity1 = 1.0 - this._opacity1);
+            },
+            child: Opacity(
+              opacity: _opacity1,
+              child: _coloredSquare(Colors.red),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() => this._opacity2 = 1.0 - this._opacity2);
+            },
+            child: AnimatedOpacity(
+              duration: Duration(seconds: 1),
+              opacity: _opacity2,
+              child: _coloredSquare(Colors.green),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() => this._opacity3 = 1.0 - this._opacity3);
+            },
+            child: AnimatedOpacity(
+              duration: Duration(seconds: 1),
+              opacity: _opacity3,
+              child: _coloredSquare(Colors.blue),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
